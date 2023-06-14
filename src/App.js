@@ -17,51 +17,69 @@ function App() {
     //const [minutes, setMinutes] = useState(25);
     
    
-    let secondsDisplay = "26";
-    let minutesDisplay = "00";
-    let seconds = 27;
-    let minutes = 0;
+    let secondsDisplay = "00";
+    let minutesDisplay = "25";
+    let seconds = 0;
+    let minutes = 25;
     let countTD = "25:00";
 
     let Interval ;
     
     function buttonStartPause() {
-     /* if (running === true){
+      if (running === true){
         clearInterval(Interval);
         setRunning(false);
-        setTimeRemaining(countTD);
-        stopTimer;
-        function stopTimer () {
-         setCountTD
-        }
-      else 
+      }
+      else if (running === false){
         setRunning(true);
-        //setTimeRemaining(countTD);*/
         clearInterval(Interval);
         Interval = setInterval(startTimer, 1000);
-     
-      
+           
       function startTimer () {
-         seconds++;
+        seconds -- ;
+        if (minutes === 0 && seconds === 0){
+         //clearInterval(Interval);
+         timerFinished()};
+     
+        if (seconds < 0){
+          minutes -- ;
+          seconds = 59;
+          secondsDisplay = seconds;
+          if (minutes >= 10){
+            minutesDisplay = minutes;
+          }
+          if (minutes < 9){
+            minutesDisplay = "0" + minutes;
+          }
+          if (minutes < 1){
+            minutesDisplay = "00"}
+        };
  
          if(seconds <= 9){
           secondsDisplay = "0" + seconds;
+          if (minutes >= 10){
+            minutesDisplay = minutes;
+          }
+          if (minutes < 9){
+            minutesDisplay = "0" + minutes;
+          }
+          if (minutes < 1){
+            minutesDisplay = "00"}
         }
         
         if (seconds > 9){
           secondsDisplay = seconds;
+          if (minutes >= 10){
+            minutesDisplay = minutes;
+          }
+          if (minutes < 9){
+            minutesDisplay = "0" + minutes;
+          }
+          if (minutes < 1){
+            minutesDisplay = "00"}
         }
       
-        if (seconds > 59) {
-          minutes ++;
-          minutesDisplay = "0" + minutes;
-          seconds = 0;
-          secondsDisplay = "0" + 0;
-        }
-        if (minutes > 9){
-          minutesDisplay = minutes;
-        }
-        console.log(document.getElementById("time-left").innerHTML);
+      console.log(document.getElementById("time-left").innerHTML);
       let countTD = (minutesDisplay)+":"+(secondsDisplay);
       document.getElementById("time-left").innerHTML = countTD;
       
@@ -70,8 +88,12 @@ function App() {
         console.log(seconds);
         console.log(secondsDisplay);
         console.log (countTD);
-       
+      }} 
     }
+  
+
+  function timerFinished(){
+    console.log("timer has reached 00:00")
   }
 
     function buttonReset() {
