@@ -4,83 +4,96 @@ import moment from 'moment';
 
 function App() {
 
-  const [running, setRunning] = useState(false)
-  const [timeRemaining, setTimeRemaining] = useState(25)
-  const [inStudy, setInStudy] = useState(false)
-  const [inBreak, setInBreak] = useState(false)
-  const [countTD, setCountTD] = useState(25)
-  const [countSD, setCountSD] = useState(25)
-  const [countBD, setCountBD] = useState(5)
+    const [running, setRunning] = useState(false)
+    const [timeRemaining, setTimeRemaining] = useState(25)
+    const [inStudy, setInStudy] = useState(false)
+    const [inBreak, setInBreak] = useState(false)
+    //const [countTD, setCountTD] = useState("25:00")
+    const [countSD, setCountSD] = useState(25)
+    const [countBD, setCountBD] = useState(5)
+    //const [minutesDisplay, setMinutesDisplay] = useState("")
+    //const [secondsDisplay, setSecondsDisplay] = useState("")
+    //const [seconds, setSeconds] = useState(59);
+    //const [minutes, setMinutes] = useState(25);
+    
+   
+    let secondsDisplay = "26";
+    let minutesDisplay = "00";
+    let seconds = 27;
+    let minutes = 0;
+    let countTD = "25:00";
 
-
-  let displayTime = moment([8,30]).format('mm:ss');
-  
-  /*window.onload = function () {
-    let seconds = "00";
-    let minutes = "00";
-    let appendMinutes = "25";
-    let appendSeconds = "0";
-    let buttonStart = document.getElementById('button-start');
-    let buttonStop = document.getElementById('button-stop');
-    let buttonReset = document.getElementById('button-reset');
     let Interval ;
     
-    console.log(displayTime);
-    console.log(appendMinutes);
-    console.log(appendSeconds);
-
-    buttonStart.onclick = function() {
-       clearInterval(Interval);
-       Interval = setInterval(startTimer, 1000);
-    }
-    
-      buttonStop.onclick = function() {
-         clearInterval(Interval);
-    }
-   
-    buttonReset.onclick = function() {
-       clearInterval(Interval);
-      minutes = "00";
-      seconds = "00";
-      appendMinutes.innerHTML = minutes;
-      appendSeconds.innerHTML = seconds;
-    }
+    function buttonStartPause() {
+     /* if (running === true){
+        clearInterval(Interval);
+        setRunning(false);
+        setTimeRemaining(countTD);
+        stopTimer;
+        function stopTimer () {
+         setCountTD
+        }
+      else 
+        setRunning(true);
+        //setTimeRemaining(countTD);*/
+        clearInterval(Interval);
+        Interval = setInterval(startTimer, 1000);
      
-    function startTimer () {
-      buttonStop.style.display = "inline-block";
-      seconds++;
       
-      if(seconds <= 9){
-        appendSeconds.innerHTML = "0" + seconds;
-      }
+      function startTimer () {
+         seconds++;
+ 
+         if(seconds <= 9){
+          secondsDisplay = "0" + seconds;
+        }
+        
+        if (seconds > 9){
+          secondsDisplay = seconds;
+        }
       
-      if (seconds > 9){
-        appendSeconds.innerHTML = seconds;
-      }
-    
-      if (seconds > 59) {
-        console.log("minutes");
-        minutes++;
-        appendMinutes.innerHTML = "0" + minutes;
-        seconds = 0;
-        appendSeconds.innerHTML = "0" + 0;
-      }
-      if (minutes > 9){
-        appendMinutes.innerHTML = minutes;
-      }
+        if (seconds > 59) {
+          minutes ++;
+          minutesDisplay = "0" + minutes;
+          seconds = 0;
+          secondsDisplay = "0" + 0;
+        }
+        if (minutes > 9){
+          minutesDisplay = minutes;
+        }
+        console.log(document.getElementById("time-left").innerHTML);
+      let countTD = (minutesDisplay)+":"+(secondsDisplay);
+      document.getElementById("time-left").innerHTML = countTD;
+      
+        console.log(minutes);
+        console.log(minutesDisplay);
+        console.log(seconds);
+        console.log(secondsDisplay);
+        console.log (countTD);
+       
     }
-}*/
-
-  function clickReset(){
-    setRunning(false);
-    setInStudy(true);
-    setInBreak(false);
-    setCountTD(25);
-    setCountSD(25);
-    setCountBD(5);
-   console.log(running, inStudy, inBreak, countTD, countSD, countBD)
-
   }
+
+    function buttonReset() {
+       clearInterval(Interval);
+       secondsDisplay = "25";
+       minutesDisplay = "00";
+       seconds = 25;
+       minutes = 0;
+        setRunning(false);
+        setInStudy(true);
+        setInBreak(false);
+        //setCountTD(25);
+        //setCountSD(25);
+        //setCountBD(5);
+        
+        let countTD = (minutesDisplay)+":"+(secondsDisplay);
+        
+
+    }
+  
+
+
 
   
   /*const Stopwatch = () => {
@@ -108,11 +121,9 @@ function App() {
   
 
         <div className = "timer">
-          <div className = "timeDisplay" id="time-left">25:00
-            <span id="displayTime"></span>
-          </div>
-          <div className = "startResetBtn"  id="start_stop" >START<br></br>PAUSE</div>
-          <div className = "startResetBtn" id="reset" onClick={() => clickReset()}>RESET</div>
+          <div className = "timeDisplay" id="time-left">25:00</div>
+          <div className = "startResetBtn"  id="start_stop"  onClick={() => buttonStartPause()}>START<br></br>PAUSE</div>
+          <div className = "startResetBtn" id="reset" onClick={() => buttonReset()}>RESET</div>
           <hr id="hr1" ></hr>
           <hr id="hr2"></hr>
           <div className = "label-container">
