@@ -6,39 +6,34 @@ let running = false;
 let interval = null;
 let secondsDisplay = "";
 let minutesDisplay = "";
+let dotColor = {};
+let breaktime = false;
 
 function App() {
    
-  //const [running, setRunning] = useState(false)
+
   const [countTD, setCountTD] = useState("25:00")
+  const [countStudyLength, setCountStudyLength] = useState(25)
+  const [countBreakLength, setCountBreakLength] = useState(5)
   
-  
+    //const [running, setRunning] = useState(false)
     //const [timeRemaining, setTimeRemaining] = useState(25)
     //const [inStudy, setInStudy] = useState(false)
     //const [inBreak, setInBreak] = useState(false)
-    //const [countSD, setCountSD] = useState(25)
-    //const [countBD, setCountBD] = useState(5)
+
+
     //const [minutesDisplay, setMinutesDisplay] = useState("")
     //const [secondsDisplay, setSecondsDisplay] = useState("")
     //const [seconds, setSeconds] = useState(59);
     //const [minutes, setMinutes] = useState(25);
-    
- 
+       
+    let minutes = countStudyLength;
     let seconds = 0;
-    let minutes = 25;
-    //let countTD = "";
     
-    
-    
-   // window.onload = function(){
-     // what();
-      //function what(){
-
     function buttonStartPause() {
-      console.log(running);
-
         if (running){
             clearInterval(interval);
+            dotColor = {color : 'orange'}
             //interval = null;
             console.log(interval);
             console.log(running);
@@ -48,7 +43,7 @@ function App() {
             console.log(seconds);
             minutes = Number(minutesDisplay);
             console.log(minutes);
-          }
+        }
         else {
           interval = setInterval(startTimer, 1000);
           console.log(interval);
@@ -58,6 +53,7 @@ function App() {
 
     function startTimer () {
       running = true;
+      dotColor = {color : 'aqua'}
       console.log(running)
       seconds -- ;
       if (minutes === 0 && seconds === 0){
@@ -71,7 +67,7 @@ function App() {
         if (minutes >= 10){
           minutesDisplay = minutes;
         }
-        if (minutes < 9){
+        if (minutes <= 9){
           minutesDisplay = "0" + minutes;
         }
         if (minutes < 1){
@@ -83,7 +79,7 @@ function App() {
         if (minutes >= 10){
           minutesDisplay = minutes;
         }
-        if (minutes < 9){
+        if (minutes <= 9){
           minutesDisplay = "0" + minutes;
         }
         if (minutes < 1){
@@ -95,7 +91,7 @@ function App() {
         if (minutes >= 10){
           minutesDisplay = minutes;
         }
-        if (minutes < 9){
+        if (minutes <= 9){
           minutesDisplay = "0" + minutes;
         }
         if (minutes < 1){
@@ -114,12 +110,20 @@ function App() {
       };
      
       console.log(countTD);
-      //document.getElementById("time-left").innerHTML = (countTD);
-       
-      //}
-      
+     
     function timerFinished(){
-      console.log("timer has reached 00:00")
+      if (breaktime = true){
+        alert ("all over rover!")
+      }else if (breaktime = false){
+      breaktime = true;
+      console.log("study timer has reached 00:00");
+      dotColor = {color : 'yellow'};
+      minutes = countBreakLength;
+      console.log(countBreakLength);
+      interval = setInterval(startTimer, 1000);
+      console.log(interval);
+      console.log(running);
+      };
     };
 
 
@@ -131,45 +135,65 @@ function App() {
         seconds = 0;
         minutes = 25;
         running = false;
+        dotColor = {color : 'orange'}
         console.log(running)
         setCountTD((minutesDisplay)+":"+(secondsDisplay));
+        setCountStudyLength(25);
+        setCountBreakLength(5);
        };
   
-  /*const Stopwatch = () => {
-    const [time, setTime] = useState(0);
-    useEffect(() => {
-      const interval = setInterval(() => {
-    setTime((t) => {
-    console.log(t); 
-    return t + 1 ;
-    });
-    }, 1000);
-    return () => clearInterval(interval);
-    }, []);
-    return  <div>Time: {time}</div>;
-  } *** stopwatch by Jack Herrington */
+       function studyIncrement(){
+        if (countStudyLength === 60){
+          return;
+        }
+        setCountStudyLength(countStudyLength +1);
+        //minutes = countStudyLength;
+      };  
+      
+      function studyDecrement(){
+        if (countStudyLength === 1){
+          return;
+        }
+        setCountStudyLength(countStudyLength -1);
+        //minutes = countStudyLength;
+      };
+
+      function breakIncrement(){
+        if (countBreakLength === 60){
+          return;
+        }
+        setCountBreakLength(countBreakLength +1)
+        //minutes = countBreakLength;
+      };
+
+      function breakDecrement(){
+        if (countBreakLength === 1){
+          return;
+        }
+        setCountBreakLength(countBreakLength -1);
+        //minutes = countBreakLength;
+      };
 
   return (
     <div className="App">
-      {/*<Stopwatch />*/}
-        
         <div className = "timer">
-          <div className = "timeDisplay" id="time-left">{countTD}</div>
+         <div className = "timeDisplay" id="time-left">{countTD}</div>
           <div className = "startResetBtn"  id="start_stop"  onClick={() => buttonStartPause()}>START<br></br>PAUSE</div>
           <div className = "startResetBtn" id="reset" onClick={() => buttonReset()}>RESET</div>
           <hr id="hr1" ></hr>
           <hr id="hr2"></hr>
           <div className = "label-container">
             <label className = "label" id="session-label">STUDY</label>
+            <span id = "timer-label" style={dotColor}> . . . </span>
             <label className = "label" id="break-label">BREAK</label>
           </div>
           <div className = "button-container">
-            <div className = "adjustBtn" id="session-increment">+</div>
-            <div className = "inputDisplay" id="session-length">25</div>
-            <div className = "adjustBtn" id="session-decrement">-</div>
-            <div className = "adjustBtn" id="break-increment">+</div>
-            <div className = "inputDisplay" id="break-length">5</div>
-            <div className = "adjustBtn" id="break-decrement">-</div>
+            <div className = "adjustBtn" id="session-increment"  onClick={() => studyIncrement()}>+</div>
+            <div className = "inputDisplay" id="session-length">{countStudyLength}</div>
+            <div className = "adjustBtn" id="session-decrement" onClick={() => studyDecrement()}>-</div>
+            <div className = "adjustBtn" id="break-increment"  onClick={() => breakIncrement()}>+</div>
+            <div className = "inputDisplay" id="break-length">{countBreakLength}</div>
+            <div className = "adjustBtn" id="break-decrement"  onClick={() => breakDecrement()}>-</div>
         </div>
       </div>
     </div>
