@@ -4,175 +4,204 @@ import { useState } from "react";
 
 let running = false;
 let interval = null;
-let secondsDisplay = "";
-let minutesDisplay = "";
-let dotColor = {};
 let breaktime = false;
+let minutes = 0;
+let seconds = 0;
+let displayMinutes = "25"
+let displaySeconds = "00"
+let sessionDisplay = "study";
+let firstStart = true;
+//let countTD = "25:00";
 
 function App() {
    
-
   const [countTD, setCountTD] = useState("25:00")
   const [countStudyLength, setCountStudyLength] = useState(25)
   const [countBreakLength, setCountBreakLength] = useState(5)
-  
+   
     //const [running, setRunning] = useState(false)
     //const [timeRemaining, setTimeRemaining] = useState(25)
     //const [inStudy, setInStudy] = useState(false)
     //const [inBreak, setInBreak] = useState(false)
-
-
-    //const [minutesDisplay, setMinutesDisplay] = useState("")
-    //const [secondsDisplay, setSecondsDisplay] = useState("")
     //const [seconds, setSeconds] = useState(59);
     //const [minutes, setMinutes] = useState(25);
        
-    let minutes = countStudyLength;
-    let seconds = 0;
-    
     function buttonStartPause() {
+      console.log(firstStart)
+      if ((running === false) && (breaktime === false) && (firstStart === true)){
+        minutes = countStudyLength;};
+      if ((running === false) && (breaktime === true) && (firstStart === true)){
+        minutes = countBreakLength;
+      };
         if (running){
             clearInterval(interval);
-            dotColor = {color : 'orange'}
             //interval = null;
             console.log(interval);
             console.log(running);
             running = false;
-            seconds = Number(secondsDisplay);
-            console.log(secondsDisplay);
+            seconds = seconds;
             console.log(seconds);
-            minutes = Number(minutesDisplay);
+            minutes = minutes;
             console.log(minutes);
-        }
+      }
         else {
           interval = setInterval(startTimer, 1000);
           console.log(interval);
           console.log(running)
+          
         };
     };
 
     function startTimer () {
+      console.log(breaktime);
       running = true;
-      dotColor = {color : 'aqua'}
-      console.log(running)
+      firstStart = false;
+      console.log(running);
       seconds -- ;
-      if (minutes === 0 && seconds === 0){
+      console.log(minutes);
+      console.log(seconds);
+      
+      if ((minutes === 0 && seconds === 0 && breaktime === false)){
         clearInterval(interval);
-        timerFinished()};
-    
+        studyTimerFinished();
+      };   
+
+      if ((minutes === 0 && seconds === 0 && breaktime === true)){
+        clearInterval(interval);
+        breakTimerFinished();
+      };
+
       if (seconds < 0){
         minutes -- ;
         seconds = 59;
-        secondsDisplay = seconds;
-        if (minutes >= 10){
-          minutesDisplay = minutes;
-        }
-        if (minutes <= 9){
-          minutesDisplay = "0" + minutes;
-        }
-        if (minutes < 1){
-          minutesDisplay = "00"}
       };
 
-        if(seconds <= 9){
-        secondsDisplay = "0" + seconds;
-        if (minutes >= 10){
-          minutesDisplay = minutes;
-        }
-        if (minutes <= 9){
-          minutesDisplay = "0" + minutes;
-        }
-        if (minutes < 1){
-          minutesDisplay = "00"}
+      if (minutes >= 10){
+        displayMinutes = minutes;
       };
-      
+
+      if (minutes < 1){
+        displayMinutes = "00"
+      };
+
+      if (minutes <= 9){
+        displayMinutes = "0" + minutes;
+      };
+
+      if (minutes < 1){
+        displayMinutes = "00"
+      };
+
       if (seconds > 9){
-        secondsDisplay = seconds;
-        if (minutes >= 10){
-          minutesDisplay = minutes;
-        }
-        if (minutes <= 9){
-          minutesDisplay = "0" + minutes;
-        }
-        if (minutes < 1){
-          minutesDisplay = "00"}
+        displaySeconds = seconds;
       };
-    console.log(minutes);
-    console.log(minutesDisplay);
-    console.log(seconds);
-    console.log(secondsDisplay);
-    
-    setCountTD((minutesDisplay)+":"+(secondsDisplay));
-    console.log((minutesDisplay)+":"+(secondsDisplay));
-    console.log(`${countTD}`);
-    
 
-      };
-     
-      console.log(countTD);
-     
-    function timerFinished(){
-      if (breaktime = true){
-        alert ("all over rover!")
-      }else if (breaktime = false){
+      if(seconds <= 9){
+        displaySeconds = "0" + seconds;
+        };
+   
+    console.log(minutes);
+    console.log(seconds);
+    
+    setCountTD ((displayMinutes)+":"+(displaySeconds));
+    console.log((minutes)+":"+(seconds));
+    console.log(countTD);
+    
+    };
+
+    function studyTimerFinished(){
       breaktime = true;
+      sessionDisplay = "break";
       console.log("study timer has reached 00:00");
-      dotColor = {color : 'yellow'};
       minutes = countBreakLength;
       console.log(countBreakLength);
       interval = setInterval(startTimer, 1000);
       console.log(interval);
       console.log(running);
       };
-    };
 
+    function breakTimerFinished(){
+      breaktime = false;
+      sessionDisplay = "study";
+      console.log("break timer has finished")
+      minutes = countStudyLength;
+      console.log(countStudyLength);
+      interval = setInterval(startTimer, 1000);
+      console.log(interval);
+      console.log(running);
+
+    };
 
     function buttonReset() {
         clearInterval(interval);
         console.log(interval);
-        secondsDisplay = "00";
-        minutesDisplay = "25";
         seconds = 0;
         minutes = 25;
         running = false;
-        dotColor = {color : 'orange'}
+        firstStart = true;
+        sessionDisplay = "study";
         console.log(running)
-        setCountTD((minutesDisplay)+":"+(secondsDisplay));
+        setCountTD("25:00");
         setCountStudyLength(25);
         setCountBreakLength(5);
+        console.log(countTD);
+        console.log(countStudyLength);
+        console.log(countBreakLength);
        };
   
        function studyIncrement(){
+        if (firstStart === false){
+          return;
+        }
         if (countStudyLength === 60){
           return;
         }
         setCountStudyLength(countStudyLength +1);
-        //minutes = countStudyLength;
+        console.log(countStudyLength);
+        minutes = countStudyLength;
+        console.log(minutes)
       };  
       
       function studyDecrement(){
+        if (firstStart === false){
+          return;
+        }
+
         if (countStudyLength === 1){
           return;
         }
         setCountStudyLength(countStudyLength -1);
-        //minutes = countStudyLength;
+        console.log(countStudyLength);
+        minutes = countStudyLength;
+        console.log(minutes)
       };
 
       function breakIncrement(){
+        if (firstStart === false){
+          return;
+        }
         if (countBreakLength === 60){
           return;
         }
         setCountBreakLength(countBreakLength +1)
-        //minutes = countBreakLength;
-      };
+        console.log(countBreakLength)
+        minutes = countBreakLength;
+        console.log(minutes)
+        };
 
       function breakDecrement(){
+        if (firstStart === false){
+          return;
+        }
+
         if (countBreakLength === 1){
           return;
         }
         setCountBreakLength(countBreakLength -1);
-        //minutes = countBreakLength;
-      };
+        console.log(countBreakLength)
+        minutes = countBreakLength;
+        console.log(minutes)
+        };
 
   return (
     <div className="App">
@@ -184,7 +213,7 @@ function App() {
           <hr id="hr2"></hr>
           <div className = "label-container">
             <label className = "label" id="session-label">STUDY</label>
-            <span id = "timer-label" style={dotColor}> . . . </span>
+            <span id = "timer-label">{sessionDisplay}</span>
             <label className = "label" id="break-label">BREAK</label>
           </div>
           <div className = "button-container">
