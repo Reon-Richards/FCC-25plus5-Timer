@@ -103,12 +103,12 @@
 
   #session-label{
     width: 140px;
-     margin-left: -4%
+    margin-left: 3%
     }
     
   #break-label{
     width: 140px;
-       margin-right: -4%
+    margin-right: 3%
   }
 
    .inputDisplay{
@@ -133,6 +133,6 @@
 
 #timer-label{
 color: orange;
-font-size: 50px;
-margin: -40px;
+font-size: 15px;
+margin: 0px;
   }
