@@ -1,113 +1,40 @@
 import './App.css';
 import { useState, useEffect } from "react";
 
-//let running = false;
-//let interval = null;
-let breaktime = false;
-let minutes = 0;
-//let seconds = 0;
-//let displayMinutes = "25"
-//let displaySeconds = "00"
-let sessionDisplay = "◀";
-//let firstStart = true;
-
 function App() {
    
   const [countTD, setCountTD] = useState(1500)
   const [countStudyLength, setCountStudyLength] = useState(25)
   const [countBreakLength, setCountBreakLength] = useState(5)
-  const [running, setRunning] = useState(false);
+  const [running, setRunning] = useState(false)
+  const [sessionDisplay, setSessionDisplay] = useState("◀")
    
-  /*function buttonStartPause() {
-        console.log(firstStart);
-    if ((running === false) && (breaktime === false) && (firstStart === true)){
-        minutes = countStudyLength;};
-    if ((running === false) && (breaktime === true) && (firstStart === true)){
-        minutes = countBreakLength;
-        };
-    if (running){
-        clearInterval(interval);
-        console.log(interval);
-        console.log(running);
-        running = false;
-        console.log(seconds);
-        minutes = minutes;
-        console.log(minutes);
-        }
-
-    else {
-        interval = setInterval(startTimer, 1000);
-        console.log(interval);
-        console.log(running);
-        console.log(breaktime);
-        console.log(firstStart);
-        console.log(minutes);
-        console.log(seconds);
-        };
-    };*/
-
-  /*function startTimer () {
-    //setCountTD ((minutes)+":"+(seconds));
-    console.log((displayMinutes)+":"+(displaySeconds));
-    console.log((minutes)+":"+(seconds));
-    console.log(countTD);
-    console.log(breaktime);
-    running = true;
-    firstStart = false;
-    console.log(running);
-    //seconds -- ;
-    console.log(minutes);
-    console.log(seconds);
-    
-    if ((minutes === 0 && seconds < 0 && breaktime === false)){
-      clearInterval(interval);
-      console.log(typeof minutes);
-      let newMinutes = document.getElementById("break-length").innerHTML;
-      console.log(typeof newMinutes);
-      console.log(newMinutes);
-      minutes = parseInt(newMinutes);
-      console.log(minutes);
-      console.log(countBreakLength);
-      studyTimerFinished();
-      };   
-
-    if ((minutes === 0 && seconds < 0 && breaktime === true)){
-      clearInterval(interval);
-      let newMinutes = document.getElementById("session-length").innerHTML;
-      console.log(typeof newMinutes);
-      console.log(newMinutes);
-      minutes = parseInt(newMinutes);
-      console.log(typeof minutes);
-      console.log(minutes);
-      console.log(countStudyLength);
-      breakTimerFinished();
-      };
-    };*/
+   const timeout = setTimeout(() => {
+      if (countTD && running){
+        setCountTD(countTD - 1)
+      }
+    }, 1000);        
+ 
 
   function buttonStartPause () {
         clearTimeout(timeout);
         setRunning(!running);
-      }
+       }
 
-  const timeout = setTimeout(() => {
-        if(countTD && running){
-          setCountTD(countTD - 1)
-        }
-      }, 1000);
-
-      const clock = () => {
+      function clock() {
         if(running){
-        restartTimer();
-        return timeout
-        
-        } else {
-        return  clearTimeout(timeout);
+          console.log(running)
+          timeout
+          restartTimer();
+          } else {
+          clearTimeout(timeout)
+          
         }
        }
-    
- useEffect(() => {
-  clock();
-     }, [running, countTD, timeout]);
+  
+       useEffect(() => {
+        clock()
+      }, [running, countTD, timeout])
 
   function timeFormatter (){
       const minutes = Math.floor(countTD / 60);
@@ -118,54 +45,34 @@ function App() {
     }
 
 
-function restartTimer () {    
-  if (breaktime === false){
-    breaktime = true;
+function restartTimer () {   
+  
+  if (!countTD && sessionDisplay === "◀"){
     setCountTD(countBreakLength * 60);
-    playAlarm();
-    sessionDisplay = "▶";
-    console.log("study timer has reached 00:00");
-    console.log(minutes);
-    console.log(countBreakLength);
-    //console.log(interval);
-    console.log(running);
-    console.log(breaktime);
+    setSessionDisplay("▶");
+    playAlarm(); 
     };
 
-  if (breaktime === true){
-    breaktime = false;
+    if (!countTD && sessionDisplay === "▶"){
     setCountTD(countStudyLength * 60);
+    setSessionDisplay("◀");
     playAlarm();
-    sessionDisplay = "◀";
-    console.log("break timer has finished")
-    console.log(minutes);
-    console.log(countStudyLength);
-    console.log(interval);
-    console.log(running);
-    console.log(breaktime);
     };
 };
 
   function playAlarm(){
     let audio = document.getElementById("beep");
     audio.play();
-    console.log(audio)
   };
 
   function buttonReset() {
     clearTimeout(timeout);
-    console.log(timeout);
     setRunning(false);
     setCountTD(1500);
     resetAlarm();
-    //firstStart = true;
-    sessionDisplay = "◀";
-    console.log(running)
+    setSessionDisplay("◀");
     setCountStudyLength(25);
     setCountBreakLength(5);
-    console.log(countTD);
-    console.log(countStudyLength);
-    console.log(countBreakLength);
     };
   
     function resetAlarm(){
@@ -175,43 +82,32 @@ function restartTimer () {
     }
 
   function studyIncrement(){
-       if (countStudyLength > 60){
-      return;
-    }
+     if (countStudyLength < 60){
     setCountStudyLength(countStudyLength +1);
     setCountTD(countTD + 60);
-    console.log(countStudyLength);
-    console.log(countTD);
-    console.log(minutes);
     };  
+  }
       
   function studyDecrement(){
-      if (countStudyLength === 1){
-      return;
-    }
+      if (countStudyLength > 1){
     setCountStudyLength(countStudyLength -1);
-    console.log(countStudyLength);
-    console.log(countTD);
-    console.log(minutes);
+    setCountTD(countTD - 60);
     };
+  }
 
   function breakIncrement(){
-    if (countBreakLength > 60){
-      return;
-    }
-    setCountBreakLength(countBreakLength +1)
-    console.log(countBreakLength);
-    console.log(minutes);
+    if (countBreakLength < 60){
+      setCountBreakLength(countBreakLength +1)
     };
+  }
 
   function breakDecrement(){
-    if (countBreakLength === 1){
-      return;
-    }
-    setCountBreakLength(countBreakLength -1);
-    console.log(countBreakLength)
-    console.log(minutes)
+    if (countBreakLength > 1){
+     setCountBreakLength(countBreakLength -1);
     };
+  }
+
+  const title = sessionDisplay === "◀" ? "◀" : "▶";
 
   return (
     <div className="App">
@@ -239,6 +135,5 @@ function restartTimer () {
      </div>
     );
 
-};
-  
+  };
 export default App;
