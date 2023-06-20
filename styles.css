@@ -1,4 +1,4 @@
-.App {
+.styles {
   text-align: center;
 }
 
@@ -111,28 +111,20 @@
     margin-right: 3%
   }
 
-   .inputDisplay{
-    display: inline-block;
-    border: 2px solid rgb(38, 106, 140);
-    background-color: rgb(23, 205, 205);
-    height: 40px;
-    width: 50px;
-    border-radius: 2px;
-    color: rgb(5, 57, 189);
-    font-size: 30px;
-    
+  .inputDisplay{
+  display: inline-block;
+  border: 2px solid rgb(38, 106, 140);
+  background-color: rgb(23, 205, 205);
+  height: 40px;
+  width: 50px;
+  border-radius: 2px;
+  color: rgb(5, 57, 189);
+  font-size: 30px;
+  
   }
 
-  #session-length{
- 
-  }
-
-  #break-length{
-    
-  }
-
-#timer-label{
-color: orange;
-font-size: 15px;
-margin: 0px;
+  #timer-label{
+  color: orange;
+  font-size: 15px;
+  margin: 0px;
   }
