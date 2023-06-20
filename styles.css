@@ -51,7 +51,6 @@
     margin-top: -106px;
     cursor: pointer;
     color:  rgb(157, 246, 182);
-    text-shadow: 1px 1px rgb(14, 107, 40), -1px -1px rgb(14, 107, 40);
   }
 
   #reset{
@@ -61,7 +60,6 @@
     line-height:36px;
     cursor: pointer;
     color:  rgb(157, 246, 182);
-    text-shadow: 1px 1px rgb(14, 107, 40), -1px -1px rgb(14, 107, 40);
   }
 
   .adjustBtn{
@@ -79,13 +77,11 @@
   #break-increment, #session-increment{
     border-radius: 5px 2px 2px 20px;
     color: rgb(15, 235, 77);
-    text-shadow: 1px 1px rgb(14, 107, 40), -1px -1px rgb(14, 107, 40);
   }
 
   #break-decrement, #session-decrement{
     border-radius: 2px 5px 20px 2px;
     color:  rgb(15, 235, 77);
-    text-shadow: 1px 1px rgb(14, 107, 40), -1px -1px rgb(14, 107, 40);
   }
 
   .button-container, .label-container{
@@ -97,9 +93,6 @@
   .label-container{
     color: white;
     margin-top:-9px;
-    color: rgb(14, 147, 52);;
-    letter-spacing: 2px;
-    text-shadow: 1px 1px rgb(14, 147, 52), -1px -1px white;
   }
 
   #hr1{
@@ -120,12 +113,18 @@
 
   #session-label{
     width: 140px;
-    margin-left: 3%
+    margin-left: 3%;
+    color: rgb(14, 147, 52);
+    letter-spacing: 2px;
+    text-shadow: 1px 1px rgb(14, 147, 52), -1px -1px white;
     }
     
   #break-label{
     width: 140px;
-    margin-right: 3%
+    margin-right: 3%;
+    color: rgb(14, 147, 52);
+    letter-spacing: 2px;
+    text-shadow: 1px 1px rgb(14, 147, 52), -1px -1px white;
   }
 
   .inputDisplay{
