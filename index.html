@@ -4,9 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>rr-25+5 Timer</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon_r_green.ico">
     <link rel="stylesheet" href="styles.css">
    
 </head>
@@ -38,140 +37,129 @@
 
 <script>
 
-//Global Variables
-let breakCounter = 5;
-let studyCounter = 25;
-let tmp = '';
-let running = false;
-let dispVal = "";
-let dispValMin = 0;
-let dispValSec = 0;
-let setInt_ID = 0;
-let isBreak = false;
-    
-//Code
-document.getElementById("break-length").innerHTML = breakCounter;
-document.getElementById("session-length").innerHTML = studyCounter;
-tmp = studyCounter + ':' + '00';
-document.getElementById("time-left").innerHTML = tmp;
-
-function breakIncrement (){
-  if(running === false){
-        if(breakCounter < 60){
-          breakCounter++;
-          document.getElementById("break-length").innerHTML = breakCounter;
-        }
-    }
-}
-
-function breakDecrement (){
-    if(running === false){
-        if(breakCounter > 1){
-          breakCounter--;
-          document.getElementById("break-length").innerHTML = breakCounter;
-        }
-    }
-}
-
-function studyIncrement (){
-    if(running === false){
-        if(studyCounter < 60) {
-            studyCounter++;
-            document.getElementById("session-length").innerHTML = studyCounter;
-        }
-        tmp = studyCounter + ':' + '00';
-        document.getElementById("time-left").innerHTML = tmp;
-    }
-}
-
-function studyDecrement (){
-    if(running === false){
-        if(studyCounter > 1){
-            studyCounter--;
-            document.getElementById("session-length").innerHTML = studyCounter;
-        }
-        tmp = studyCounter + ':' + '00';
-        document.getElementById("time-left").innerHTML = tmp;
-    }
-}
-
-function updateDisplay() {
-//to show the updated time in the timer
-let min = '';
-let sec = '';
-if (dispValMin < 10) {
-    min  = '0' + dispValMin;
-} else min = dispValMin;
-if (dispValSec < 10) {
-    sec = '0' + dispValSec;
-} else sec = dispValSec;
-    document.getElementById("time-left").innerHTML = (min + ':' + sec);
-}
-
-function updateTimer () {
-//purpose is to decrement the seconds count and /or the minutes count and display the updated time
-        if(dispValMin >= 1 && dispValSec === 0){
-            dispValSec = 59;
-            dispValMin--;
-            updateDisplay();
-        } else if(dispValMin >= 0   && dispValSec !== 0){
-            dispValSec--;
-            updateDisplay();
-        } else if(dispValMin === 0 && dispValSec === 0){
-            if(isBreak === false){
-                isBreak = true;
-                dispValMin = breakCounter;
-                document.getElementById("timer-label").innerHTML = "▶";
-            } else if(isBreak === true){
-                isBreak = false;
-                dispValMin = studyCounter;
-                document.getElementById("timer-label").innerHTML = "◀";
-            }
-            dispValSec = 0;
-            document.getElementById('beep').play();
-            document.getElementById('beep').muted = false;
-            updateDisplay();
-        }
-}
-
-function start_stopButton(){
-    let currentDisplay = document.getElementById("time-left").innerHTML;
-    dispVal = currentDisplay.split(':');
-    dispValMin = parseInt(dispVal[0]);
-    dispValSec = parseInt(dispVal[1]);
-    if(running === false){
-        //start the timer...
-        running = true;
-        setInt_ID = setInterval(updateTimer, 1000);
-    } else if(running === true){
-        //stop the timer...
-        running = false;
-        clearInterval(setInt_ID);
-    }
-}
-
-function resetButton(){
-    breakCounter = 5;
-    studyCounter = 25;
+    let breakCounter = 5;
+    let studyCounter = 25;
+    let tmp = '';
+    let running = false;
+    let dispVal = "";
+    let dispValMin = 0;
+    let dispValSec = 0;
+    let setInt_ID = 0;
+    let isBreak = false;
+        
     document.getElementById("break-length").innerHTML = breakCounter;
     document.getElementById("session-length").innerHTML = studyCounter;
     tmp = studyCounter + ':' + '00';
     document.getElementById("time-left").innerHTML = tmp;
-    document.getElementById("timer-label").innerHTML = "◀";
-    clearInterval(setInt_ID);
-    running = false;
-    isBreak = false;
-    let audio  = document.getElementById('beep');
-    audio.pause();
-    audio.currentTime = 0;
-}
 
+    function breakIncrement (){
+    if(running === false){
+            if(breakCounter < 60){
+            breakCounter++;
+            document.getElementById("break-length").innerHTML = breakCounter;
+            }
+        }
+    }
 
+    function breakDecrement (){
+        if(running === false){
+            if(breakCounter > 1){
+            breakCounter--;
+            document.getElementById("break-length").innerHTML = breakCounter;
+            }
+        }
+    }
 
+    function studyIncrement (){
+        if(running === false){
+            if(studyCounter < 60) {
+                studyCounter++;
+                document.getElementById("session-length").innerHTML = studyCounter;
+            }
+            tmp = studyCounter + ':' + '00';
+            document.getElementById("time-left").innerHTML = tmp;
+        }
+    }
+
+    function studyDecrement (){
+        if(running === false){
+            if(studyCounter > 1){
+                studyCounter--;
+                document.getElementById("session-length").innerHTML = studyCounter;
+            }
+            tmp = studyCounter + ':' + '00';
+            document.getElementById("time-left").innerHTML = tmp;
+        }
+    }
+
+    function updateDisplay() {
+    let min = '';
+    let sec = '';
+    if (dispValMin < 10) {
+        min  = '0' + dispValMin;
+    } else min = dispValMin;
+    if (dispValSec < 10) {
+        sec = '0' + dispValSec;
+    } else sec = dispValSec;
+        document.getElementById("time-left").innerHTML = (min + ':' + sec);
+    }
+
+    function updateTimer () {
+            if(dispValMin >= 1 && dispValSec === 0){
+                dispValSec = 59;
+                dispValMin--;
+                updateDisplay();
+            } else if(dispValMin >= 0   && dispValSec !== 0){
+                dispValSec--;
+                updateDisplay();
+            } else if(dispValMin === 0 && dispValSec === 0){
+                if(isBreak === false){
+                    isBreak = true;
+                    dispValMin = breakCounter;
+                    document.getElementById("timer-label").innerHTML = "▶";
+                } else if(isBreak === true){
+                    isBreak = false;
+                    dispValMin = studyCounter;
+                    document.getElementById("timer-label").innerHTML = "◀";
+                }
+                dispValSec = 0;
+                document.getElementById('beep').play();
+                document.getElementById('beep').muted = false;
+                updateDisplay();
+            }
+    }
+
+    function start_stopButton(){
+        let currentDisplay = document.getElementById("time-left").innerHTML;
+        dispVal = currentDisplay.split(':');
+        dispValMin = parseInt(dispVal[0]);
+        dispValSec = parseInt(dispVal[1]);
+        if(running === false){
+            running = true;
+            setInt_ID = setInterval(updateTimer, 1000);
+        } else if(running === true){
+            running = false;
+            clearInterval(setInt_ID);
+        }
+    }
+
+    function resetButton(){
+        breakCounter = 5;
+        studyCounter = 25;
+        document.getElementById("break-length").innerHTML = breakCounter;
+        document.getElementById("session-length").innerHTML = studyCounter;
+        tmp = studyCounter + ':' + '00';
+        document.getElementById("time-left").innerHTML = tmp;
+        document.getElementById("timer-label").innerHTML = "◀";
+        clearInterval(setInt_ID);
+        running = false;
+        isBreak = false;
+        let audio  = document.getElementById('beep');
+        audio.pause();
+        audio.currentTime = 0;
+    }
+    
 </script> 
-
-<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
-
 
 </body>
 

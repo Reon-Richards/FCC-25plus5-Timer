@@ -1,4 +1,4 @@
-.styles {
+*{
   text-align: center;
 }
 
@@ -7,7 +7,7 @@
   border: 2px solid  rgb(14, 147, 52);
   margin:auto;
   margin-top: 100px;
-  height:200px;
+  height:205px;
   width: 360px;
   background-color:rgb(150, 245, 49);
   border-radius: 10px;
@@ -15,16 +15,14 @@
 
 .timeDisplay{
     align-items: center;
-    padding-top:-px;
     background-color: rgb(5, 146, 146);
-    font-size: 85px;
+    font-size: 80px;
     color: rgb(81, 250, 137);
-    margin: 10px  5px 15px 5px;
+    margin: 10px  5px 15px 7px;
     border: 2px solid  rgb(14, 147, 52);
     height: 90px;
-    line-height:80px;
+    line-height:100px;
     width: 285px;
-    text-align:center;
     border-radius: 10px;
   }
 
@@ -38,21 +36,32 @@
     text-align:center;
     margin-left: 300px;
     border-radius: 5px;
+    cursor: pointer;
   }
 
+  .startResetBtn:active, #reset:active, .adjustBtn:active  {
+    background-color: rgb(15, 87, 47);
+    }
+
   #start_stop{
-    line-height: 18px;
-    height: 38px;
-    padding-top: 2px;
+    line-height: 10px;
+    padding-top:6px;
     font-size:12px;
     position: absolute;
-    margin-top: -107px;
+    margin-top: -106px;
+    cursor: pointer;
+    color:  rgb(157, 246, 182);
+    text-shadow: 1px 1px rgb(14, 107, 40), -1px -1px rgb(14, 107, 40);
   }
 
   #reset{
     position: absolute;
-    margin-top: -60px;
-    line-height: 40px;
+    margin-top: -55px;
+    height: 36px;
+    line-height:36px;
+    cursor: pointer;
+    color:  rgb(157, 246, 182);
+    text-shadow: 1px 1px rgb(14, 107, 40), -1px -1px rgb(14, 107, 40);
   }
 
   .adjustBtn{
@@ -63,15 +72,20 @@
     color: rgb(196, 255, 216);
     text-align:center;
     background-color: rgb(24, 172, 90);
+    cursor: pointer;
   
   }
 
   #break-increment, #session-increment{
     border-radius: 5px 2px 2px 20px;
+    color: rgb(15, 235, 77);
+    text-shadow: 1px 1px rgb(14, 107, 40), -1px -1px rgb(14, 107, 40);
   }
 
   #break-decrement, #session-decrement{
     border-radius: 2px 5px 20px 2px;
+    color:  rgb(15, 235, 77);
+    text-shadow: 1px 1px rgb(14, 107, 40), -1px -1px rgb(14, 107, 40);
   }
 
   .button-container, .label-container{
@@ -81,8 +95,11 @@
      }
 
   .label-container{
-    color: rgb(244, 247, 245);
+    color: white;
     margin-top:-9px;
+    color: rgb(14, 147, 52);;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px rgb(14, 147, 52), -1px -1px white;
   }
 
   #hr1{
